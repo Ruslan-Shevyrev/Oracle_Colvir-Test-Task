@@ -19,28 +19,28 @@ where n not in (select n from table_2 where n in(select * from table_3));
 ```
 
 1. 		N 
-	--------
+	_________
 		1
 		
 2. 		N 
-	--------
+	_________
 		2
 		
 3. 		N 
-	--------
+	_________
 		3
 		
 4. 		N 
-	--------
+	_________
 		1
 		2
 5. 		N 
-	--------
+	_________
 		2
 		3
 		
 6. 		N 
-	--------
+	_________
 		1
 		3
 
@@ -49,4 +49,4 @@ where n not in (select n from table_2 where n in(select * from table_3));
 :x: 3\
 :heavy_check_mark: 4\
 :x: 5\
-:x: 6\
+:x: 6
