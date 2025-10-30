@@ -17,32 +17,33 @@ insert into table_3 values(3);
 select * from table_1
 where n not in (select n from table_2 where n in(select * from table_3));
 ```
-
+```
 1. 		N 
-	_________
+	
 		1
 		
 2. 		N 
-	_________
+	
 		2
 		
 3. 		N 
-	_________
+	
 		3
 		
 4. 		N 
-	_________
+	
 		1
 		2
 5. 		N 
-	_________
+	
 		2
 		3
 		
 6. 		N 
-	_________
+	
 		1
 		3
+```
 
 :x: 1\
 :x: 2\
