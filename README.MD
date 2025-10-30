@@ -19,28 +19,23 @@ where n not in (select n from table_2 where n in(select * from table_3));
 ```
 ```
 1. 		N 
-	
 		1
 		
 2. 		N 
-	
 		2
 		
 3. 		N 
-	
 		3
 		
 4. 		N 
-	
 		1
 		2
+		
 5. 		N 
-	
 		2
 		3
 		
 6. 		N 
-	
 		1
 		3
 ```
