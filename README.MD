@@ -46,3 +46,68 @@ where n not in (select n from table_2 where n in(select * from table_3));
 :heavy_check_mark: 4\
 :x: 5\
 :x: 6
+
+# :two:
+Приведен запрос. Выбрать один верный аналог (заменитель).
+```
+SELECT
+    TUS.SYSTEM_ID,
+    TU.USER_LOGIN
+FROM
+    T_USERS_SYSTEMS TUS
+    LEFT JOIN T_USERS TU
+        ON TUS.USER_ID = TU.USER_ID
+```
+
+```
+1. SELECT
+    TUS.SYSTEM_ID,
+    TU.USER_LOGIN
+FROM
+    T_USERS_SYSTEMS TUS,
+    T_USERS TU
+WHERE
+    TU.USER_ID = TUS.USER_ID
+		
+2. SELECT
+    TUS.SYSTEM_ID,
+    TU.USER_LOGIN
+FROM
+    T_USERS_SYSTEMS TUS,
+    T_USERS TU
+WHERE
+    TU.USER_ID = TUS.USER_ID(+)
+		
+3. SELECT
+    TUS.SYSTEM_ID,
+    TU.USER_LOGIN
+FROM
+    T_USERS TU
+FULL JOIN
+    T_USERS_SYSTEMS TUS
+        ON TUS.USER_ID = TU.USER_ID
+		
+4. SELECT
+    TUS.SYSTEM_ID,
+    TU.USER_LOGIN
+FROM
+    T_USER_SYSTEMS TUS,
+    T_USERS TU
+WHERE
+    TUS.USER_ID = TU.USER_ID(+)
+		
+5. SELECT
+    TUS.SYSTEM_ID,
+    TU.USER_LOGIN
+FROM
+    T_USERS_SYSTEMS TUS,
+    T_USERS TU
+WHERE
+    TU.USER_ID(+) = TUS.USER_ID
+```
+
+:x: 1\
+:x: 2\
+:x: 3\
+:x: 4\
+:heavy_check_mark: 5
