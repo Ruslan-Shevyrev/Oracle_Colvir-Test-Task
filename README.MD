@@ -111,3 +111,59 @@ WHERE
 :x: 3\
 :x: 4\
 :heavy_check_mark: 5
+
+# :three:
+Приведен запрос. Каким из запросов его можно заменить?
+```
+SELECT
+    TU.USER_LOGIN
+FROM
+    T_USERS TU
+WHERE
+    TU.USER_ID IN (SELECT TUS.USER_ID
+                   FROM T_USERS_SYSTEMS TUS)
+```
+
+```
+1. SELECT
+    TU.USER_LOGIN
+FROM
+    T_USERS TU,
+    T_USERS_SYSTEMS TUS
+WHERE
+    TUS.USER_ID = TU.USER_ID
+    AND TUS.USER_ID = TUS.USER_ID
+		
+2. SELECT
+    TU.USER_LOGIN
+FROM
+    T_USERS TU
+WHERE
+    EXISTS (
+        (SELECT 1
+         FROM T_USERS_SYSTEMS TUS
+         WHERE TUS.USER_ID = TU.USER_ID)
+    )
+    AND 1=1
+		
+3. SELECT
+    TU.USER_LOGIN
+FROM
+    T_USERS TU
+LEFT JOIN
+    T_USERS_SYSTEMS TUS
+ON (TUS.USER_ID = TU.USER_ID AND 0<1)
+		
+4. SELECT
+    TU.USER_LOGIN
+FROM
+    T_USERS TU,
+    T_USERS_SYSTEMS TUS
+WHERE
+    TU.USER_ID(+) = TUS.USER_ID
+```
+
+:x: 1\
+:heavy_check_mark: 2\
+:x: 3\
+:x: 4
