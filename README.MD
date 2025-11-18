@@ -167,3 +167,86 @@ WHERE
 :heavy_check_mark: 2\
 :x: 3\
 :x: 4
+
+# :four:
+Выберите правильный результат выполнения команд.
+```
+create global temporary table buff_study
+(id        number,
+ id_pok    number,
+ value     number)
+on commit delete rows /*+ first_row */;
+
+insert into buff_study(id,id_pok,value) values(1,220,3456);
+insert into buff_study(id,id_pok,value) values(2,440,3456);
+insert into buff_study(id,id_pok,value) values(3,20,3456);
+
+select *
+from
+    buff_study;
+
+commit;
+
+select *
+from
+    buff_study;
+```
+
+```
+1. ORA-00901: invalid CREATE command
+	ORA-00942 Table or view does not exist
+	ORA-00942 Table or view does not exist
+	ORA-00942 Table or view does not exist
+	ORA-00942 Table or view does not exist
+	
+	commit comlete
+	
+	ORA-00942 Table or view does not exist	
+	
+2. 	ID		ID_POK		VALUE 
+	1		220			3456
+	2		440			3456
+	3		20			3456
+		
+	commit comlete
+	
+	ID		ID_POK		VALUE 
+		
+3.  ID		ID_POK		VALUE 
+	1		220			3456
+	2		440			3456
+	3		20			3456
+		
+	commit comlete
+	
+	ID		ID_POK		VALUE 
+	1		220			3456
+	2		440			3456
+	3		20			3456
+		
+4. ID		ID_POK		VALUE 
+	2		440			3456
+	3		20			3456
+		
+	commit comlete
+	
+	ID		ID_POK		VALUE 
+	
+5.  ID		ID_POK		VALUE 
+	1		220			3456
+	2		440			3456
+	3		20			3456
+		
+	commit comlete
+	
+	ID		ID_POK		VALUE 
+	2		440			3456
+	3		20			3456
+
+```
+
+:x: 1\
+:heavy_check_mark: 2\
+:x: 3\
+:x: 4\
+:x: 5
