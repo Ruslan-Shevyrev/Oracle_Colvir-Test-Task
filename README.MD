@@ -389,3 +389,35 @@ end;
 :x: 4\
 :x: 5\
 :x: 6
+
+# :seven:
+Значение поля VAL в строке с ID=3
+```
+with t as
+(
+    select 1 id, 4 cnt1, 6 cnt2, 7 cnt3 from dual
+    union all
+    select 2 id, 5 cnt1, 5 cnt2, 8 cnt3 from dual
+    union all
+    select 3 id, 5 cnt1, 6 cnt2, 9 cnt3 from dual
+    union all
+    select 4 id, 5 cnt1, 7 cnt2, 9 cnt3 from dual
+)
+select
+    id,
+    count(1) over(partition by cnt1) +
+    count(1) over(partition by cnt2) as VAL
+from t;
+```
+
+```
+1.  4
+	
+2.  7
+		
+3.  5
+```
+
+:x: 1\
+:x: 2\
+:heavy_check_mark: 3
