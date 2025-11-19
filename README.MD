@@ -250,3 +250,79 @@ from
 :x: 3\
 :x: 4\
 :x: 5
+
+# :five:
+Какой запрос гарантированно вернет максимальное значение VAL.
+
+```
+1. with t as
+	(
+		select 2 val from dual
+		union all
+		select 3 val from dual
+		union all
+		select 1 val from dual
+	)
+	select
+		val
+	from
+	(
+		select val from t order by val desc
+	)
+	where
+		rownum = 1
+	
+2. 	with t as
+	(
+		select 2 val from dual
+		union all
+		select 3 val from dual
+		union all
+		select 1 val from dual
+	)
+	select
+		val
+	from
+	(
+		select val from t order by val asc
+	)
+	where
+		rownum = 1
+		
+3.  with t as
+	(
+		select 2 val from dual
+		union all
+		select 3 val from dual
+		union all
+		select 1 val from dual
+	)
+	select val from t where rownum = 1 order by val desc
+		
+4. with t as
+	(
+		select 2 val from dual
+		union all
+		select 3 val from dual
+		union all
+		select 1 val from dual
+	)
+	select val from t where rownum = max(val)
+
+5.  with t as
+	(
+		select 2 val from dual
+		union all
+		select 3 val from dual
+		union all
+		select 1 val from dual
+	)
+	select max(val) from t where rownum = 1
+
+```
+
+:heavy_check_mark: 1\
+:x: 2\
+:x: 3\
+:x: 4\
+:x: 5
