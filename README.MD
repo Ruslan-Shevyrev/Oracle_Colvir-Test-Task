@@ -326,3 +326,66 @@ from
 :x: 3\
 :x: 4\
 :x: 5
+
+# :six:
+Что выведется на экран после выполнения анонимного блока?
+```
+declare
+    a boolean := true;
+    b boolean := false;
+    c boolean := null;
+begin
+    if (a and c) then 
+        dbms_output.put_line('yes'); 
+    else 
+        dbms_output.put_line('no'); 
+    end if;
+
+    if (b or not c) then 
+        dbms_output.put_line('yes'); 
+    else 
+        dbms_output.put_line('no'); 
+    end if;
+
+    if (not (a < c)) then 
+        dbms_output.put_line('yes'); 
+    else 
+        dbms_output.put_line('no'); 
+    end if;
+end;
+```
+
+```
+1.  no
+	no
+	yes
+	
+2.  yes
+	yes
+	no
+		
+3.  no
+	no
+	no
+		
+4.  yes
+	no
+	yes
+	
+5.  no
+	yes
+	yes
+	
+6. 	ORA-06550: line 8, column 14:
+	PLS-00306: wrong number or types of arguments in call to '<'
+	ORA-06550: line 8, column 3:
+	PL/SQL: Statement ignored
+
+```
+
+:x: 1\
+:x: 2\
+:heavy_check_mark: 3\
+:x: 4\
+:x: 5\
+:x: 6
