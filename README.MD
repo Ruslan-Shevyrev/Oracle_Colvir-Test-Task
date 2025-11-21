@@ -421,3 +421,50 @@ from t;
 :x: 1\
 :x: 2\
 :heavy_check_mark: 3
+
+# :eight:
+Если изначально таблица пустая. Что будет в Таблице после выполнения анонимного PL/SQL.
+```
+create table data(ID integer);
+BEGIN
+    BEGIN
+        INSERT INTO DATA VALUES (1);
+        SAVEPOINT AD1;
+        COMMIT;
+
+        INSERT INTO DATA VALUES (2);
+        SAVEPOINT AD2;
+
+        INSERT INTO DATA VALUES (3);
+        SAVEPOINT AD3;
+
+        ROLLBACK TO AD2;
+
+        INSERT INTO DATA VALUES (4);
+        SAVEPOINT AD4;
+
+        ROLLBACK TO AD1;
+    EXCEPTION
+        WHEN OTHERS THEN
+            NULL;
+            ROLLBACK TO AD4;
+    END;
+    COMMIT;
+END;
+```
+
+```
+1.  1
+	2
+	4
+	
+2.  1
+	2
+	3
+		
+3.  1
+```
+
+:heavy_check_mark: 1\
+:x: 2\
+:x: 3
