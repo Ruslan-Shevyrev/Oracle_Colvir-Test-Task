@@ -468,3 +468,54 @@ END;
 :heavy_check_mark: 1\
 :x: 2\
 :x: 3
+
+# :nine:
+Имеется таблица
+
+```
+create table DATA(
+    ID       number constraint PK_DATA primary key,
+    ID_TERR  number not null,
+    ID_POK   number not null,
+    VALUE    number
+);
+```
+с данными
+
+```
+ID	ID_TERR	ID_POK	VALUE
+1	10	1	100
+2	10	2	120
+3	10	2	10
+4	20	1	110
+5	20	2	200
+6	20	2	300
+7	20	2	0
+```
+Какой из запросов позволяет выполнить агрегацию величины VALUE по показателям (ID_POK) в рамках регионов (ID_TERR)
+
+```
+1.SELECT
+		T.ID_TERR,
+		T.ID_POK,
+		AGR(T.VALUE) AS SVAL
+	FROM DATA T
+	GROUP BY T.ID_TERR, T.ID_POK;
+	
+2. SELECT
+		T.ID_TERR,
+		T.ID_POK,
+		AVG(T.VALUE) OVER (PARTITION BY T.ID_TERR, T.ID_POK)
+	FROM DATA T;
+		
+3. SELECT
+		T.ID_TERR,
+		T.ID_POK,
+		SUM(T.VALUE) AS SVAL
+	FROM DATA T
+	GROUP BY T.ID_TERR, T.ID_POK;
+```
+
+:x: 1\
+:x: 2\
+:heavy_check_mark: 3
