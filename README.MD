@@ -519,3 +519,53 @@ ID	ID_TERR	ID_POK	VALUE
 :x: 1\
 :x: 2\
 :heavy_check_mark: 3
+
+# :ten:
+Имеется таблица
+
+Что вернёт последний запрос (SELECT) в скрипте:
+```
+create table parent(
+    id number constraint pk_parent primary key
+);
+
+insert into parent select rownum from dual connect by rownum <= 10;
+
+create table child(
+    id       number constraint pk_child primary key,
+    id_parent number constraint fk_child_parent references parent(id) on delete cascade
+);
+
+insert into child values(1,2);
+insert into child values(2,4);
+insert into child values(3,6);
+insert into child values(4,8);
+insert into child values(5,10);
+
+delete from parent where id = 8;
+
+commit;
+
+select *
+from child;
+```
+
+
+```
+1.На операторе delete будет ошибка
+	delete from parent where id=8
+	ORA-02292: integrity constraint (FK_CHILD_PARENT) violated - child record found
+	
+2. ID   ID_PARENT
+	5    10
+		
+3. ID   ID_PARENT
+	1    2
+	2    4
+	3    6
+	5    10
+```
+
+:x: 1\
+:x: 2\
+:heavy_check_mark: 3
