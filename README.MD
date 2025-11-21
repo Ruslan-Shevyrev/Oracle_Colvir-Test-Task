@@ -520,7 +520,7 @@ ID	ID_TERR	ID_POK	VALUE
 :x: 2\
 :heavy_check_mark: 3
 
-# :ten:
+# :zero: :one:
 Имеется таблица
 
 Что вернёт последний запрос (SELECT) в скрипте:
