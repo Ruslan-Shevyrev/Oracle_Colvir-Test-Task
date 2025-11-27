@@ -552,7 +552,7 @@ from child;
 
 
 ```
-1.На операторе delete будет ошибка
+1. На операторе delete будет ошибка
 	delete from parent where id=8
 	ORA-02292: integrity constraint (FK_CHILD_PARENT) violated - child record found
 	
@@ -569,3 +569,40 @@ from child;
 :x: 1\
 :x: 2\
 :heavy_check_mark: 3
+
+# :one::two:
+Создана таблица и в неё выполняются вставки (INSERT).
+Какой оператор INSERT нарушит уникальность и будет выдана ошибка?
+
+```
+ORA-00001: unique constraint
+
+CREATE TABLE T(
+    ID_TERR NUMBER NOT NULL,
+    ID_KOEF NUMBER NOT NULL,
+    ID_YEAR NUMBER NOT NULL,
+    NUM_VALUE NUMBER CONSTRAINT UK0 UNIQUE,
+    CONSTRAINT UK1 UNIQUE(ID_TERR, ID_KOEF, ID_YEAR),
+    CONSTRAINT UK2 UNIQUE(ID_TERR, ID_KOEF)
+);
+
+INSERT INTO T VALUES(1,1,1,1);
+INSERT INTO T VALUES(1,2,1,2);
+INSERT INTO T VALUES(2,1,1,3);
+INSERT INTO T VALUES(1,1,1,4);
+INSERT INTO T VALUES(1,1,1,5);
+INSERT INTO T VALUES(1,1,1,6);
+```
+
+
+```
+1. INSERT INTO T VALUES(1,1,1,6)
+
+2. INSERT INTO T VALUES(1,1,1,5)
+		
+3. INSERT INTO T VALUES(1,1,1,4)
+```
+
+:heavy_check_mark: 1\
+:x: 2\
+:x: 3
