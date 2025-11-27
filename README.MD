@@ -603,6 +603,48 @@ INSERT INTO T VALUES(1,1,1,6);
 3. INSERT INTO T VALUES(1,1,1,4)
 ```
 
-:heavy_check_mark: 1\
+:x: 1\
 :x: 2\
-:x: 3
+:heavy_check_mark: 3
+
+# :one::three:
+Выберите правильный результат выполнения запроса select:
+
+```
+create table table_1(n number);
+create table table_2(n number);
+
+insert into table_1 values(1);
+insert into table_1 values(2);
+
+insert into table_2 values(1);
+insert into table_2 values(3);
+
+select n
+from table_1
+union all
+select n
+from table_2
+order by n;
+```
+
+
+```
+1.  N
+	1
+	2
+	3
+		
+2.  N
+	1
+	
+3.  N
+	1
+	1
+	2
+	3
+```
+
+:x: 1\
+:x: 2\
+:heavy_check_mark: 3
