@@ -648,3 +648,81 @@ order by n;
 :x: 1\
 :x: 2\
 :heavy_check_mark: 3
+
+
+# :one::four:
+План выполнения запросов.
+
+Создана таблица и наполнена данными следующим скриптом:
+
+```
+CREATE TABLE DATA(
+  ID  NUMBER CONSTRAINT PK_DATA PRIMARY KEY,
+  VAL NUMBER NOT NULL
+);
+
+INSERT INTO DATA
+SELECT
+  ROWNUM,
+  1 AS VAL
+FROM
+  DUAL
+CONNECT BY ROWNUM <= 1000000;
+
+COMMIT;
+
+BEGIN
+  DBMS_STATS.gather_table_stats(user, tabname => 'DATA', cascade => true);
+END;
+/
+```
+Далее выполняется ряд запросов, необходимо выбрать наиболее вероятные
+пути доступа к данным. Пути доступа в вариантах ответов приведены в той же
+последовательности, что и запросы SELECT.
+```
+SELECT SUM(1)
+   FROM DATA
+
+SELECT *
+   FROM DATA D
+   WHERE D.ID = 1234
+
+SELECT COUNT(*)
+   FROM DATA D
+   WHERE D.ID BETWEEN 10 AND 200
+
+SELECT SUM(VAL)
+   FROM DATA D
+   WHERE D.ID > 10
+```
+
+```
+1.  TABLE ACCESS FULL
+	INDEX RANGE SCAN
+	TABLE ACCESS FULL
+	INDEX UNIQUE SCAN
+	INDEX FAST FULL SCAN
+		
+2.  INDEX FAST FULL SCAN
+	INDEX UNIQUE SCAN
+	TABLE ACCESS FULL
+	INDEX RANGE SCAN
+	TABLE ACCESS FULL
+	
+3.  TABLE ACCESS FULL
+	INDEX FAST FULL SCAN
+	INDEX RANGE SCAN
+	TABLE ACCESS FULL
+	INDEX UNIQUE SCAN
+```
+
+:x: 1\
+:x: 2\
+:heavy_check_mark: 3
+
+<table>
+	<tr>
+		<td valign="center" width="49%"><img src="https://github.com/Ruslan-Shevyrev/Ruslan-Shevyrev/blob/main/logoRS/logo_mini.gif" title="logo"></td>
+		<td valign="center" width="49%"><img src="https://github.com/Ruslan-Shevyrev/Ruslan-Shevyrev/blob/main/logoRS/logoRS_FULL.png" title="RuslanShevyrev"></td>
+	</tr>
+</table>
